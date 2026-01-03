@@ -1,0 +1,127 @@
+/* Общий фон и шрифты */
+body {
+  background-color: #1b1f3b; /* темно-синий, уютный фон */
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+/* Список задач */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Элемент задачи */
+li {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* теплый градиент */
+  margin: 10px 0;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* Hover элемент задачи */
+li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Заголовок задачи */
+li span:first-child {
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+}
+
+/* Кнопка удаления */
+li button {
+  background-color: #ff4d6d;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+li button:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.05);
+}
+
+/* Форма */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* гармоничный градиент с синим */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  color: white;
+}
+
+/* Метки полей */
+form label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Поля ввода */
+form input,
+form textarea {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Фокус на поле */
+form input:focus,
+form textarea:focus {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  transform: scale(1.02);
+}
+
+/* Кнопка отправки */
+form button {
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  background-color: #ffb347; /* мягкий оранжево-желтый */
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover кнопки */
+form button:hover {
+  background-color: #ff7e5f; /* слегка более насыщенный */
+  transform: scale(1.05);
+}
+
+/* Анимация появления элементов */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
