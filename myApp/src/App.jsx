@@ -28,6 +28,7 @@ function App() {
 
   async function onChange(id, changed) {
     await PatchTask(BACKEND_URL, id, changed);
+    console.log(`changed ${id} state to ${changed}`);
     setTasks(prev => prev.map(task => task.id === id ? {...task, completed: changed} : task));
     console.log(`task state changed:${changed}`)
   }
