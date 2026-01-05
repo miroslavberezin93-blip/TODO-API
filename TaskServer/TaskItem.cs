@@ -6,6 +6,7 @@ namespace TaskServer
     public class TaskItem
     {
         [JsonPropertyName("id")]
+        [Key]
         public int Id { get; set; }
         [JsonPropertyName("title")]
         public string Title { get; set; } = string.Empty;
