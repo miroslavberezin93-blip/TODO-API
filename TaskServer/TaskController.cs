@@ -46,7 +46,7 @@ namespace TaskServer
             var task = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
             if (task == null) return NotFound();
 
-            Console.WriteLine($"deleted task:{task}");
+            Console.WriteLine($"deleted task:{task.Title}");
 
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
