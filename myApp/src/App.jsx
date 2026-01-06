@@ -2,12 +2,20 @@ import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import TaskForm from "./TaskForm";
 import { PostNewTask, GetTasks, DeleteTask, PatchTaskState, PatchTaskEdit } from "./ManageTask";
+import Sidebar from "./Sidebar";
 
 const BACKEND_URL = 'http://localhost:5225';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState('all');
   
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'all') return true;
+    if (filter === 'pending') return !task.completed;
+    if (filter === 'completed') return task.completed;
+  });
+
   useEffect(() => {
       async function LoadTasks() {
       const res = await GetTasks(BACKEND_URL);
@@ -41,8 +49,9 @@ function App() {
   return (
     <div>
       <h1>Tasks</h1>
-      <TaskList list={tasks} onDelete={onDelete} onChange={onChange} onEdit={onEdit}/>
-      <TaskForm onSubmit={onSubmit}/>
+      <Sidebar onFilter={setFilter} />
+      <TaskList list={filteredTasks} onDelete={onDelete} onChange={onChange} onEdit={onEdit} />
+      <TaskForm onSubmit={onSubmit} />
     </div>
   );
 } export default App;
