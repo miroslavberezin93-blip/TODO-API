@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+textarea {
+    resize: none;
+}
+
+button {
+    cursor: pointer;
+}

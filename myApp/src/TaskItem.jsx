@@ -19,28 +19,34 @@ function TaskItem({task, onDelete, onChange, onEdit}) {
 
     return isEditing ?
     (
-        <li>
+        <li className="animate-fade-in grid grid-cols-4 items-center text-center border-b border-b-blue-200">
             <input value={editTitle} onChange={e => setEditTitle(e.target.value)} />
             <textarea value={editDescription} onChange={e => setEditDescription(e.target.value)} />
-            <button onClick={Save}>Done</button>
-            <button onClick={() => {
-                setIsEditing(false);
-                setEditTitle(task.title);
-                setEditDescription(task.description);
-                }}>Cancel</button>
+            <div className={`min-h-full border-r-6 ${task.completed ? 'border-r-green-500' : 'border-r-red-600'}`}></div>
+            <div className="flex flex-col gap-2">
+                <button className="hover:bg-gray-200 duration-300" onClick={Save}>Done</button>
+                <button className="hover:bg-gray-200 duration-300" onClick={() => {
+                    setIsEditing(false);
+                    setEditTitle(task.title);
+                    setEditDescription(task.description);
+                    }}>Cancel</button>
+            </div>
         </li>
     ) : (
-        <li>
-            <span>{task.title}</span>
-            <span>{task.description}</span>
-            Completed:
-            <input
+        <li className="animate-fade-in grid grid-cols-4 items-center text-center border-b border-b-gray-200">
+            <span className="wrap-break-word">{task.title}</span>
+            <span className="wrap-break-word">{task.description}</span>
+            <div className={`min-h-full transition-colors duration-300 border-r-6 ${task.completed ? 'border-r-green-500' : 'border-r-red-600'}`}>
+                <input
                 type="checkbox"
                 checked={task.completed ?? false}
                 onChange={e => onChange(task.id, e.target.checked)}
             />
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-            <button onClick={() => onDelete(task.id)}>Delete</button>
+            </div>
+            <div className="flex flex-col gap-2">
+                <button className="hover:bg-gray-200 duration-300" onClick={() => setIsEditing(true)}>Edit</button>
+                <button className="hover:bg-gray-200 duration-300" onClick={() => onDelete(task.id)}>Delete</button>
+            </div>
         </li>
     );
 } export default TaskItem;

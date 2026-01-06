@@ -48,10 +48,18 @@ function App() {
     
   return (
     <div>
-      <h1>Tasks</h1>
-      <Sidebar onFilter={setFilter} />
-      <TaskList list={filteredTasks} onDelete={onDelete} onChange={onChange} onEdit={onEdit} />
-      <TaskForm onSubmit={onSubmit} />
-    </div>
+      <header className="p-2 text-gray-500 text-xl border-b border-b-gray-100">Tasks</header>
+      <Sidebar onFilter={setFilter}  filter={filter} />
+      <div className="flex flex-col">
+        <div className="grid grid-cols-4 items-center text-center border-b border-b-gray-200 shadow-md">
+          <span>Title</span>
+          <span>Description</span>
+          <span>Status</span>
+          <span></span>
+        </div>
+        <TaskList list={filteredTasks} onDelete={onDelete} onChange={onChange} onEdit={onEdit}/>
+        <TaskForm onSubmit={onSubmit} />
+      </div>
+      </div>
   );
 } export default App;
