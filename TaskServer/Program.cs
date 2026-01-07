@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TaskServer;
+using TaskServer.DATA;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>

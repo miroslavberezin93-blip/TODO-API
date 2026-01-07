@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace TaskServer
+namespace TaskServer.Dto
 {
-    public class TaskItem
+    public class TaskDto
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
@@ -13,7 +12,5 @@ namespace TaskServer
         public string Description { get; set; } = string.Empty;
         [JsonPropertyName("completed")]
         public bool Completed { get; set; }
-        [JsonPropertyName("userId")]
-        public int UserId { get; set; }
     }
 }
