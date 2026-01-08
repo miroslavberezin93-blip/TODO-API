@@ -73,14 +73,5 @@ namespace Server.Services
             RandomNumberGenerator.Fill(randomBytes);
             return Convert.ToBase64String(randomBytes);
         }
-
-        public bool ValidateRefreshToken(string token, string storedToken, DateTime expiry)
-        {
-            if (storedToken != token)
-                return false;
-            if (expiry < DateTime.UtcNow)
-                return false;
-            return true;
-        }
     }
 }

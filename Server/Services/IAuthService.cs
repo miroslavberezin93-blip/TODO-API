@@ -6,9 +6,9 @@ namespace Server.Services
     {
         Task<TokenResponseDto> RegisterAsync(string username, string password);
         Task<TokenResponseDto> LoginAsync(string username, string password);
-        Task<TokenResponseDto> UpdateUsernameAsync(string username, string password);
+        Task<TokenResponseDto> UpdateUsernameAsync(string newUsername, string oldUsername, string password);
         Task<TokenResponseDto> UpdatePasswordAsync(string username, string currentPassword, string newPassword);
-        Task<TokenResponseDto?> RefreshTokenAsync(string refreshToken);
-        Task<TokenResponseDto?> LogoutAsync(int userId);
+        Task<string> RefreshTokenAsync(string refreshToken);
+        Task LogoutAsync(int userId);
     }
 }

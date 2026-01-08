@@ -26,6 +26,12 @@ namespace Server.Services
             return await _context.Users.FirstOrDefaultAsync(
                 u => u.Username == username);
         }
+        //TODO: Not secured metod, need to create model for token and add id in it(refactor)
+        public async Task<User?> GetUserByTokenAsync(string token)
+        {
+            return await _context.Users.FirstOrDefaultAsync(
+                u => u.RefreshToken == token);
+        }
 
         public async Task<User?> CreateUserAsync(string username, string passwordHash)
         {
@@ -69,7 +75,7 @@ namespace Server.Services
             return user;
         }
 
-        public async Task<bool> UpdateUserTokenAsync(int userId, string refreshToken, DateTime expiry)
+        public async Task<bool> UpdateUserTokenAsync(int userId, string? refreshToken, DateTime expiry)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
             if (user == null) return false;

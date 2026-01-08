@@ -37,6 +37,19 @@ namespace Server.Services
                 throw new UnauthorizedAccessException("Invalid password");
             return await GetTokenDtoAndUpdate(user);
         }
+        public async Task<TokenResponseDto> UpdateUsernameAsync(string newUsername, string oldUsername, string password)
+        {
+            ValidateNullOrWhiteSpace(newUsername, "New Username");
+            ValidateNullOrWhiteSpace(oldUsername, "Old Username");
+            ValidateNullOrWhiteSpace(password, "Password");
+            var user = await _userService.GetUserAsync(oldUsername) ??
+                throw new InvalidOperationException("User not found");
+            if (user.Username == newUsername)
+                throw new ArgumentException("Username cannot be same as last");
+            if (!_securityService.ValidatePassword(password, user.PasswordHash))
+                throw new ArgumentException("Invalid password");
+            return await GetTokenDtoAndUpdate(user);
+        }
 
         public async Task<TokenResponseDto> UpdatePasswordAsync(string username, string currentPassword, string newPassword)
         {
@@ -46,30 +59,33 @@ namespace Server.Services
             var user = await _userService.GetUserAsync(username) ??
                 throw new InvalidOperationException("User not found");
             if (!_securityService.ValidatePassword(currentPassword, user.PasswordHash))
-                throw new UnauthorizedAccessException("Invalid password");
+                throw new ArgumentException("Invalid password");
             if (_securityService.ValidatePassword(newPassword, user.PasswordHash))
-                throw new UnauthorizedAccessException("New password can not be same as last");
-            var hashed = _securityService.HashPassword(user.PasswordHash);
-            await _userService.UpdatePasswordAsync(user.UserId, hashed);
-            return await GetTokenDtoAndUpdate(user);
-        }
-        public async Task<TokenResponseDto> UpdateUsernameAsync(string username, string currentPassword, string newPassword)
-        {
-            ValidateNullOrWhiteSpace(username, "Username");
-            ValidateNullOrWhiteSpace(currentPassword, "Current Password");
-            ValidateNullOrWhiteSpace(newPassword, "New Password");
-            var user = await _userService.GetUserAsync(username) ??
-                throw new InvalidOperationException("User not found");
-            if (!_securityService.ValidatePassword(currentPassword, user.PasswordHash))
-                throw new UnauthorizedAccessException("Invalid password");
-            if (_securityService.ValidatePassword(newPassword, user.PasswordHash))
-                throw new UnauthorizedAccessException("New password can not be same as last");
-            var hashed = _securityService.HashPassword(user.PasswordHash);
+                throw new ArgumentException("New password can not be same as last");
+            var hashed = _securityService.HashPassword(newPassword);
             await _userService.UpdatePasswordAsync(user.UserId, hashed);
             return await GetTokenDtoAndUpdate(user);
         }
 
-        public async Task<string>
+        public async Task<string> RefreshTokenAsync(string refreshToken)
+        {
+            var user = await _userService.GetUserByTokenAsync(refreshToken) ??
+                throw new ArgumentException("Invalid token", nameof(refreshToken));
+            if (user.TokenExpiry < DateTime.UtcNow)
+                throw new UnauthorizedAccessException("Token expired");
+            return _securityService.GenerateAccessToken(user.UserId);
+        }
+
+        public async Task LogoutAsync(int userId)
+        {
+            if (userId < 0)
+                throw new ArgumentException("Invalid user id", nameof(userId));
+            await _userService.UpdateUserTokenAsync(
+                userId,
+                null,
+                DateTime.MinValue
+                );
+        }
 
         private async Task<TokenResponseDto> GetTokenDtoAndUpdate(User user)
         {

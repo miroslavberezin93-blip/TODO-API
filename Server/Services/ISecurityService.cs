@@ -6,6 +6,5 @@ namespace Server.Services
         bool ValidatePassword(string password, string hash);
         string GenerateAccessToken(int userId);
         string GenerateRefreshToken();
-        bool ValidateRefreshToken(string token, string storedToken, DateTime expiry);
     }
 }
