@@ -69,6 +69,8 @@ namespace Server.Services
             return await GetTokenDtoAndUpdate(user);
         }
 
+        public async Task<string>
+
         private async Task<TokenResponseDto> GetTokenDtoAndUpdate(User user)
         {
             var refreshToken = _securityService.GenerateRefreshToken();
