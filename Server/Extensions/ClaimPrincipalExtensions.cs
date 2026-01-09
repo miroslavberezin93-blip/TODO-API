@@ -7,7 +7,7 @@ namespace Server.Extensions
     {
         public static int GetUserId(this ClaimsPrincipal user)
         {
-            var idClaim = user.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+            var idClaim = user.FindFirstValue(ClaimTypes.NameIdentifier) ??
                 throw new UnauthorizedAccessException("User ID not found in token");
             if (!int.TryParse(idClaim, out int userId))
                 throw new UnauthorizedAccessException("Invalid User ID in token");

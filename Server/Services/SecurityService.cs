@@ -55,7 +55,7 @@ namespace Server.Services
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -67,6 +67,7 @@ namespace Server.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
         public string GenerateRefreshToken()
         {
             byte[] randomBytes = new byte[64];
