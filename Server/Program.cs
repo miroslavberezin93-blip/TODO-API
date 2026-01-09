@@ -21,7 +21,7 @@ builder.Services.Configure<SecurityOptions>(
     builder.Configuration.GetSection("Security"));
 
 var securityOptions = builder.Configuration.GetSection("Security").Get<SecurityOptions>();
-var key = Encoding.UTF8.GetBytes(securityOptions.JwtSecret);
+var key = Encoding.UTF8.GetBytes(securityOptions!.JwtSecret);
 
 Console.WriteLine($"JwtSecret length: {securityOptions?.JwtSecret?.Length}");
 
@@ -69,6 +69,7 @@ builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserTaskFacade, UserTaskFacade>();
+builder.Services.AddScoped<IUserDeleteFacade, UserDeleteFacade>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

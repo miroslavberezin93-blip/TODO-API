@@ -65,6 +65,17 @@ namespace Server.Services
             return true;
         }
 
+        public async Task<bool> DeleteTasksByUserId(int userId)
+        {
+            var tasks = await _context.Tasks.Where(t =>
+                t.UserId == userId)
+                .ToListAsync();
+            if (tasks.Count == 0) return false;
+            _context.RemoveRange(tasks);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         private static TaskItemDto CreateDto(TaskItem taskItem)
         {
             var dto = new TaskItemDto

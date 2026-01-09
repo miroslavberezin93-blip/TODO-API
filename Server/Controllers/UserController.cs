@@ -1,18 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Server.Services;
 using Server.Extensions;
 
 namespace Server.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserDeleteFacade _userDelete;
         private readonly IUserTaskFacade _userTasks;
-        public UserController(IUserService userService, IUserTaskFacade userTasks)
+        public UserController(IUserDeleteFacade userDelete, IUserTaskFacade userTasks)
         {
-            _userService = userService;
+            _userDelete = userDelete;
             _userTasks = userTasks;
         }
 
@@ -29,7 +31,7 @@ namespace Server.Controllers
         public async Task<IActionResult> Delete()
         {
             int userId = User.GetUserId();
-            if (!await _userService.DeleteUserAsync(userId)) return NotFound();
+            if (!await _userDelete.DeleteUserAndTasksAsync(userId)) return NotFound();
             return NoContent();
         }
     }
