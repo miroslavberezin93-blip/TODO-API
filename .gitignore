@@ -1,12 +1,5 @@
-# Frontend
-myApp/node_modules
-myApp/dist
-myApp/.vite
-
-# Backend
 TaskServer/bin
 TaskServer/obj
 
-# Общие
 .env
 .vs
