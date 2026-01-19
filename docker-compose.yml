@@ -6,7 +6,7 @@ services:
           interval: 5s
           retries: 5
         volumes:
-         - /root/pgdata:/var/lib/postgresql
+         - /root/pgdata:/var/lib/postgresql/18/data
         environment:
           - POSTGRES_USER=postgres
           - POSTGRES_PASSWORD=123
