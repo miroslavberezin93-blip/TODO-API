@@ -11,8 +11,6 @@ services:
           - POSTGRES_USER=postgres
           - POSTGRES_PASSWORD=123
           - POSTGRES_DB=apidata
-        ports:
-          - "5432:5432"
 
     migrator:
         build:
